@@ -1,0 +1,70 @@
+
+
+.modal_box{
+    width: 20%;
+    height: auto;
+    padding: 20px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    background-color: white;
+}
+.modal_box input{
+    width: 90%;
+    height: 50px;
+    margin: 10px auto;
+    padding-left: 10px;
+    font-size: 18px;
+}
+
+.modal_box input::placeholder{
+    font-size: 18px;
+}
+
+.btns{
+    display: flex;
+}
+
+
+.closeModal{
+    width: auto;
+    padding: 15px;
+    cursor: pointer;
+    background-color: rgba(156, 54, 54, 0.705);
+    color: white;
+    margin: 20px;
+    border: none;
+    font-size: 20px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+
+}
+
+.addModal{
+    width: auto;
+    padding: 15px;
+    cursor: pointer;
+    background-color: green;
+    color: white;
+    margin: 20px;
+    border: none;
+    font-size: 20px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}

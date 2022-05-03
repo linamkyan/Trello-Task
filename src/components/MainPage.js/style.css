@@ -1,0 +1,53 @@
+
+
+.openModal{
+    width: 150px;
+    height: 50px;
+    background-color: green;
+    color: white;
+    margin: 20px;
+    border: none;
+    font-size: 20px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.addedSection{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.section_box{
+    width: 300px;
+    min-height: 350px;
+    margin: 20px;
+    background-color: black;
+}
+
+.section_box h3{
+    color: white;
+    font-size: 26px;
+    border-bottom: 1px solid white;
+    padding-bottom: 20px;
+}
+
+.task_text{
+    width: 90%;
+    margin: 5px auto;
+    border: 1px solid white;
+}
+
+.task_text h2{
+    color: black;
+    font-size: 16px;
+   
+}
+.task_text p{
+    color: black;
+    font-size: 12px;
+
+}
