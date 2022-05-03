@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback } from 'react'
 import { useDrag } from 'react-dnd'
 import './style.css'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,7 +6,7 @@ import { ShowModalEdit } from '../../store/reducer'
 import EditModal from '../EditModal'
 import { selectModalDataEdit } from '../../store/selector'
 
-export default function DragComponent({ taskEl, task, setTask }) {
+export default React.memo(function DragComponent({ taskEl, task, setTask }) {
   const [, drag] = useDrag(
     () => ({
       type: 'task',
@@ -18,23 +18,23 @@ export default function DragComponent({ taskEl, task, setTask }) {
     [taskEl],
   )
 
-  function removeTask() {
+  const removeTask = useCallback(() => {
     let removed = task.filter((removeItem) => removeItem.id !== taskEl.id)
     setTask(removed)
-  }
+  })
   console.log(1)
 
   const dispatch = useDispatch()
 
   const { showEdit } = useSelector(selectModalDataEdit)
 
-  const handleClickEdit = () => {
-    let edited = task.filter((editItem) => {
+  const handleClickEdit = useCallback(() => {
+    task.filter((editItem) => {
       if (editItem.id === taskEl.id) {
         dispatch(ShowModalEdit(editItem.id))
       }
     })
-  }
+  })
 
   return (
     <div>
@@ -54,4 +54,4 @@ export default function DragComponent({ taskEl, task, setTask }) {
       </div>
     </div>
   )
-}
+})

@@ -31,6 +31,10 @@ export default function SectionComponent({ el, task, setTask }) {
       className="section_box"
       style={{ background: `${el.color}` }}
     >
+       <span className="edit_task" >
+          &#9998;
+        </span>
+
       <h3>{el.title}</h3>
 
       {Array.isArray(task)

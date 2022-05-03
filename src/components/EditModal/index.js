@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { CloseModalEdit } from '../../store/reducer'
 import { useDispatch } from 'react-redux'
 
@@ -21,12 +21,12 @@ export default function EditModal({ taskEl, task, setTask, sections }) {
     setChangeTask(editTask)
   }
 
-  const editInput = () => {
+  const editInput = useCallback(() => {
     setTask((prevTask) =>
       prevTask.map((item) => (item.id === changeTask.id ? changeTask : item)),
     )
     handleClickEdit()
-  }
+  })
 
   return (
     <div className="modal_box_edit">

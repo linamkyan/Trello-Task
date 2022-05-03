@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShowModal, ShowModalTask } from '../../store/reducer'
 import Modal from '../Modal/Modal'
@@ -19,27 +19,20 @@ export default function MainPage() {
     localStorage.setItem('task', JSON.stringify(task))
   }, [task])
 
-  const [addedTask, setAddedTask] = useState({
-    titleTask: '',
-    desc: '',
-    sectionId: '',
-  })
-
-
   const dispatch = useDispatch()
 
   const { show } = useSelector(selectModalData)
   const { showTask } = useSelector(selectModalDataTask)
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     dispatch(ShowModal())
-  }
+  })
 
-  const handleClickTask = () => {
+  const handleClickTask = useCallback(() => {
     if (sections.length != 0) {
       dispatch(ShowModalTask())
     }
-  }
+  })
 
   return (
     <div>
@@ -53,8 +46,6 @@ export default function MainPage() {
       </button>
       {showTask && (
         <TaskModal
-          addedTask={addedTask}
-          setAddedTask={setAddedTask}
           sections={sections}
           setSections={setSections}
           task={task}
@@ -71,7 +62,6 @@ export default function MainPage() {
                   key={el.id}
                   task={task}
                   setTask={setTask}
-                  
                 />
               ))
             : null}
