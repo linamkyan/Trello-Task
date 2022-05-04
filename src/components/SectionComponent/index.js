@@ -1,13 +1,28 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDrop } from 'react-dnd'
 import DragComponent from '../DragComponent'
 import './style.css'
 
-export default function SectionComponent({ el, task, setTask }) {
+export default function SectionComponent({
+  el,
+  task,
+  setTask,
+  setSections,
+  sections,
+}) {
+  console.log(sections)
+
+  const deleteCard = useCallback(() => {
+    let removed = sections.filter((removeItem) => removeItem.id !== el.id)
+    setSections(removed)
+    let removedTask = task.filter((x) => x.sectionId !== el.id)
+    setTask(removedTask)
+  })
+
   const [, drop] = useDrop(() => ({
     accept: 'task',
     drop: (item) => {
-      const newTask = task.map((x) => {
+      task.map((x) => {
         if (x.id === item.id) {
           return { ...x, sectionId: el.id }
         }
@@ -31,12 +46,11 @@ export default function SectionComponent({ el, task, setTask }) {
       className="section_box"
       style={{ background: `${el.color}` }}
     >
-       <span className="edit_task" >
-          &#9998;
-        </span>
+      <span className="deleteCard" onClick={deleteCard}>
+        &#x2716;
+      </span>
 
       <h3>{el.title}</h3>
-
       {Array.isArray(task)
         ? task
             .filter((e) => e.sectionId === el.id)

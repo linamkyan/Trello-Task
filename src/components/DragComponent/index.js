@@ -6,23 +6,27 @@ import { ShowModalEdit } from '../../store/reducer'
 import EditModal from '../EditModal'
 import { selectModalDataEdit } from '../../store/selector'
 
+
+
 export default React.memo(function DragComponent({ taskEl, task, setTask }) {
-  const [, drag] = useDrag(
+  const [{ isDragging }, drag] = useDrag(
     () => ({
       type: 'task',
       item: taskEl,
       collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
+            isDragging: monitor.isDragging()
+        }),
     }),
     [taskEl],
   )
 
+
+  
   const removeTask = useCallback(() => {
     let removed = task.filter((removeItem) => removeItem.id !== taskEl.id)
     setTask(removed)
   })
-  console.log(1)
+
 
   const dispatch = useDispatch()
 
@@ -38,7 +42,7 @@ export default React.memo(function DragComponent({ taskEl, task, setTask }) {
 
   return (
     <div>
-      <div role="Handle" ref={drag} className="task_text">
+      <div role="Handle" ref={drag} className="task_text" style={{ transform: isDragging ? 'rotate(5deg)' : 'rotate(0deg)' }} >
         <span className="delete_task" onClick={removeTask}>
           &#x2716;
         </span>

@@ -17,7 +17,8 @@ export default function MainPage() {
 
   useEffect(() => {
     localStorage.setItem('task', JSON.stringify(task))
-  }, [task])
+    localStorage.setItem('section', JSON.stringify(sections))
+  }, [task, sections])
 
   const dispatch = useDispatch()
 
@@ -35,7 +36,7 @@ export default function MainPage() {
   })
 
   return (
-    <div>
+    <div className='back'>
       <button onClick={handleClick} className="openModal">
         Add A Block
       </button>
@@ -62,6 +63,8 @@ export default function MainPage() {
                   key={el.id}
                   task={task}
                   setTask={setTask}
+                  sections={sections}
+                  setSections={setSections}
                 />
               ))
             : null}
