@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { CloseModal } from '../../store/reducer'
 import { useDispatch } from 'react-redux'
 import './style.css'
 
 export default function Modal({ setSections, sections }) {
+  
   const dispatch = useDispatch()
   const handleClick = () => {
     dispatch(CloseModal())
@@ -11,29 +12,20 @@ export default function Modal({ setSections, sections }) {
 
   const [addedSection, setAddedSection] = useState({
     title: '',
-    color: '#00000',
+    color: '#141414',
   })
 
-  const handleAdd = (e) => {
-    e.preventDefault()
-    const title = e.target.value
-    const dataTitle = e.target.getAttribute('name')
-    const dataColor = e.target.getAttribute('name')
-    const color = e.target.value
-
-    const newData = { ...addedSection }
-    newData[dataTitle] = title
-    newData[dataColor] = color
-
-    setAddedSection(newData)
+  const handleAdd = ({ target }) => {
+    const { name, value } = target
+    setAddedSection((prevState) => {
+      return { ...prevState, [name]: value }
+    })
   }
 
-  const added = (e) => {
-    // e.preventDefault()
+  const added = useCallback(() => {
     const newBox = {
       id: new Date().getMilliseconds(),
-      title: addedSection.title,
-      color: addedSection.color,
+      ...addedSection,
     }
 
     if (newBox.title === '') {
@@ -48,16 +40,21 @@ export default function Modal({ setSections, sections }) {
     }
 
     handleClick()
-  
-  }
+  })
 
   return (
     <div className="modal_box">
-      <input placeholder="Enter a title" name="title" onChange={handleAdd} />
+      <input
+        placeholder="Enter a title"
+        name="title"
+        value={addedSection.title}
+        onChange={handleAdd}
+      />
       <input
         type="color"
         placeholder="Enter a color"
         name="color"
+        value={addedSection.color}
         onChange={handleAdd}
       />
       <div className="btns">

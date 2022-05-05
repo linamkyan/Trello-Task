@@ -1,44 +1,36 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { CloseModalTask } from '../../store/reducer'
 import { useDispatch } from 'react-redux'
 import './style.css'
 
-export default function TaskModal({
-  task,
-  setTask,
-  addedTask,
-  setAddedTask,
-  sections,
-}) {
+export default function TaskModal({ setTask, sections }) {
+  const [addedTask, setAddedTask] = useState({
+    titleTask: '',
+    desc: '',
+    sectionId: '',
+  })
+  
   const dispatch = useDispatch()
 
   const handleClickTask = () => {
     dispatch(CloseModalTask())
   }
 
-  const handleAddtask = (e) => {
-    e.preventDefault()
-    const titleTask = e.target.value
-    const dataTitleTask = e.target.getAttribute('name')
-    const dataDisk = e.target.getAttribute('name')
-    const desk = e.target.value
-
-    const newTasks = { ...addedTask }
-    newTasks[dataTitleTask] = titleTask
-    newTasks[dataDisk] = desk
-
-    setAddedTask(newTasks)
+  const handleAddtask = ({ target }) => {
+    const { name, value } = target
+    setAddedTask((prevState) => {
+      return { ...prevState, [name]: value }
+    })
   }
 
   const addedTasks = (e) => {
     const newTask = {
       id: new Date().getMilliseconds(),
-      titleTask: addedTask.titleTask,
-      desc: addedTask.desc,
+      ...addedTask,
       sectionId: addedTask.sectionId,
     }
 
-    if (newTask.title === '') {
+    if (newTask.titleTask === '') {
       alert('add a title')
       return
     }
@@ -49,17 +41,18 @@ export default function TaskModal({
     handleClickTask()
   }
 
-
   return (
     <div className="modal_box">
       <input
         placeholder="Enter a title"
         name="titleTask"
+        value={addedTask.titleTask}
         onChange={handleAddtask}
       />
       <input
         placeholder="Enter a discription"
         name="desc"
+        value={addedTask.desc}
         onChange={handleAddtask}
       />
       <div className="btns">
