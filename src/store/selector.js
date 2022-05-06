@@ -9,4 +9,12 @@ const selectModalDataTask = (state) => ({
 const selectModalDataEdit = (state) => ({
   showEdit: state.modalReducerEdit.showEdit,
 })
-export { selectModalData, selectModalDataTask, selectModalDataEdit }
+
+const selectEditTaskRedux = (state) => state.editTaskRedux
+
+export {
+  selectModalData,
+  selectModalDataTask,
+  selectModalDataEdit,
+  selectEditTaskRedux,
+}

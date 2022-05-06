@@ -1,19 +1,18 @@
 import React, { useState, useCallback } from 'react'
-import { CloseModal } from '../../store/reducer'
 import { useDispatch } from 'react-redux'
+import { CloseModal } from '../../store/action'
 import './style.css'
 
 export default function Modal({ setSections, sections }) {
-  
   const dispatch = useDispatch()
-  const handleClick = () => {
-    dispatch(CloseModal())
-  }
-
   const [addedSection, setAddedSection] = useState({
     title: '',
     color: '#141414',
   })
+
+  const handleClick = () => {
+    dispatch(CloseModal())
+  }
 
   const handleAdd = ({ target }) => {
     const { name, value } = target
@@ -32,6 +31,7 @@ export default function Modal({ setSections, sections }) {
       alert('add a title')
       return
     }
+
     if (sections === null) {
       sections = [newBox]
     } else {

@@ -1,22 +1,24 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { useDrop } from 'react-dnd'
+import { useSelector, useDispatch } from 'react-redux'
+import { editTaskAction, deleteTaskInSectionAction } from '../../store/action'
+import { selectEditTaskRedux } from '../../store/selector'
 import DragComponent from '../DragComponent'
 import './style.css'
 
 export default function SectionComponent({
   el,
-  task,
   setTask,
   setSections,
   sections,
 }) {
-  console.log(sections)
+  const dispatch = useDispatch()
+  const task = useSelector(selectEditTaskRedux)
 
   const deleteCard = useCallback(() => {
     let removed = sections.filter((removeItem) => removeItem.id !== el.id)
     setSections(removed)
-    let removedTask = task.filter((x) => x.sectionId !== el.id)
-    setTask(removedTask)
+    dispatch(deleteTaskInSectionAction(el))
   })
 
   const [, drop] = useDrop(() => ({
@@ -28,14 +30,7 @@ export default function SectionComponent({
         }
         return x
       })
-      setTask((prevTask) =>
-        prevTask.map((x) => {
-          if (x.id === item.id) {
-            return { ...x, sectionId: el.id }
-          }
-          return x
-        }),
-      )
+      dispatch(editTaskAction({ ...item, sectionId: el.id }))
     },
   }))
 

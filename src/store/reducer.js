@@ -1,91 +1,75 @@
-import { combineReducers } from "redux";
-
-export const ShowModal = payload => {
-  return {
-    type: "MODAL_OPEN",
-    payload
-  };
-};
-
-export const CloseModal = payload => {
-  return {
-    type: "MODAL_CLOSE",
-    payload
-  };
-};
+import { combineReducers } from 'redux'
 
 const modalReducer = (state = { show: false }, action) => {
   switch (action.type) {
-   
-    case "MODAL_OPEN":
-      return { show: true };
-    case "MODAL_CLOSE":
-      return { show: false };
+    case 'MODAL_OPEN':
+      return { show: true }
+    case 'MODAL_CLOSE':
+      return { show: false }
     default:
-      return state;
+      return state
   }
-};
-
-
-
-export const ShowModalTask = payload => {
-  return {
-    type: "MODAL_OPEN_TASK",
-    payload
-  };
-};
-
-export const CloseModalTask = payload => {
-  return {
-    type: "MODAL_CLOSE_TASK",
-    payload
-  };
-};
+}
 
 const modalReducerTask = (state = { showTask: false }, action) => {
   switch (action.type) {
-   
-    case "MODAL_OPEN_TASK":
-      return { showTask: true };
-    case "MODAL_CLOSE_TASK":
-      return { showTask: false };
+    case 'MODAL_OPEN_TASK':
+      return { showTask: true }
+    case 'MODAL_CLOSE_TASK':
+      return { showTask: false }
     default:
-      return state;
+      return state
   }
-};
-
-
-
-export const ShowModalEdit = payload => {
-  return {
-    type: "MODAL_OPEN_EDIT",
-    payload
-  };
-};
-
-export const CloseModalEdit  = payload => {
-  return {
-    type: "MODAL_CLOSE_EDIT",
-    payload
-  };
-};
+}
 
 const modalReducerEdit = (state = { showEdit: false }, action) => {
   switch (action.type) {
-   
-    case "MODAL_OPEN_EDIT":
-      return { showEdit: action.payload };
-    case "MODAL_CLOSE_EDIT":
-      return { showEdit: false };
+    case 'MODAL_OPEN_EDIT':
+      return { showEdit: action.payload }
+    case 'MODAL_CLOSE_EDIT':
+      return { showEdit: false }
     default:
-      return state;
+      return state
   }
-};
+}
 
+const editTaskRedux = (
+  state = JSON.parse(localStorage.getItem('task')) || [],
+  action,
+) => {
+  switch (action.type) {
+    case 'EDIT_TASK':
+      const editedTasks = state.map((item) =>
+        item.id === action.payload.id ? action.payload : item,
+      )
+      localStorage.setItem('task', JSON.stringify(editedTasks))
+      return editedTasks
 
+    case 'DELETE_TASK':
+      const deleteTasks = state.filter((item) => item.id !== action.payload.id)
+      localStorage.setItem('task', JSON.stringify(deleteTasks))
+      return deleteTasks
+
+    case 'ADD_TASK':
+      const addTasks = state.concat(action.payload)
+      localStorage.setItem('task', JSON.stringify(addTasks))
+      return addTasks
+
+    case 'DELETE_TASK_IN_SECTION':
+      const deleteTasksInSection = state.filter(
+        (x) => x.sectionId !== action.payload.id,
+      )
+      localStorage.setItem('task', JSON.stringify(deleteTasksInSection))
+      return deleteTasksInSection
+
+    default:
+      return state
+  }
+}
 
 export default combineReducers({
-  modalReducer, 
+  modalReducer,
   modalReducerTask,
-  modalReducerEdit
-});
+  modalReducerEdit,
+  editTaskRedux,
+})

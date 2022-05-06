@@ -1,6 +1,5 @@
 import './App.css'
 import MainPage from './components/MainPage.js/MainPage'
-import CloseModal from '../src/store/reducer'
 
 function App() {
   return (
