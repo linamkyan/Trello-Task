@@ -1,15 +1,15 @@
 import React, { useState, useCallback } from 'react'
-import { CloseModalEdit } from '../../store/reducer'
 import { useDispatch } from 'react-redux'
+import { editTaskAction } from '../../store/action'
+import { CloseModalEdit } from '../../store/action'
 
-export default function EditModal({ taskEl, task, setTask, sections }) {
+export default function EditModal({ taskEl }) {
   const dispatch = useDispatch()
+  const [changeTask, setChangeTask] = useState(taskEl)
 
   const handleClickEdit = () => {
     dispatch(CloseModalEdit())
   }
-
-  const [changeTask, setChangeTask] = useState(taskEl)
 
   const editTasks = ({ target }) => {
     const { name, value } = target
@@ -22,9 +22,7 @@ export default function EditModal({ taskEl, task, setTask, sections }) {
   }
 
   const editInput = useCallback(() => {
-    setTask((prevTask) =>
-      prevTask.map((item) => (item.id === changeTask.id ? changeTask : item)),
-    )
+    dispatch(editTaskAction(changeTask))
     handleClickEdit()
   })
 
