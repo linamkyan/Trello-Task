@@ -1,16 +1,15 @@
-import React, { useCallback, useState } from 'react'
-import { CloseModalTask } from '../../store/reducer'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { CloseModalTask, addTaskAction } from '../../store/action'
 import './style.css'
 
-export default function TaskModal({ setTask, sections }) {
+export default function TaskModal({ sections }) {
+  const dispatch = useDispatch()
   const [addedTask, setAddedTask] = useState({
     titleTask: '',
     desc: '',
     sectionId: '',
   })
-  
-  const dispatch = useDispatch()
 
   const handleClickTask = () => {
     dispatch(CloseModalTask())
@@ -23,7 +22,7 @@ export default function TaskModal({ setTask, sections }) {
     })
   }
 
-  const addedTasks = (e) => {
+  const addedTasks = () => {
     const newTask = {
       id: new Date().getMilliseconds(),
       ...addedTask,
@@ -36,8 +35,7 @@ export default function TaskModal({ setTask, sections }) {
     }
 
     newTask.sectionId = sections[0].id
-    setTask((prevTask) => [...prevTask, newTask])
-
+    dispatch(addTaskAction(newTask))
     handleClickTask()
   }
 
